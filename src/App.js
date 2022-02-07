@@ -37,7 +37,7 @@ function App() {
         <div className="main__categories">
           {data.categories.map((item, index) => {
             return (
-              item.meals && (
+              item.meals.length && (
                 <Category categoryName={item.name} meals={item.meals} />
               )
             );
