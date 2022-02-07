@@ -36,7 +36,11 @@ function App() {
       <div className="container main">
         <div className="main__categories">
           {data.categories.map((item, index) => {
-            return <Category categoryName={item.name} meals={item.meals} />;
+            return (
+              item.meals && (
+                <Category categoryName={item.name} meals={item.meals} />
+              )
+            );
           })}
         </div>
         <div className="main__cart">cart item</div>
