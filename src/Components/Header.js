@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = ({ restaurantName, restaurantDescription, imgSrc }) => {
+const Header = ({ restaurant }) => {
   return (
     <div className="header">
       <div className="header__top">
@@ -11,10 +11,10 @@ const Header = ({ restaurantName, restaurantDescription, imgSrc }) => {
       </div>
       <div className="header__bottom container">
         <div className="header__bottom--left">
-          <h1>{restaurantName}</h1>
-          <p className="gray">{restaurantDescription} </p>
+          <h1>{restaurant.name}</h1>
+          <p className="gray">{restaurant.description} </p>
         </div>
-        <img src={imgSrc} alt={restaurantName} />
+        <img src={restaurant.picture} alt={restaurant.name} />
       </div>
     </div>
   );

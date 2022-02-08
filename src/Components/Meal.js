@@ -1,25 +1,19 @@
 import React from "react";
 
-const Meal = ({
-  mealTitle,
-  mealDescription,
-  mealPrice,
-  mealPopular,
-  mealImgSrc,
-}) => {
+const Meal = ({ meal, addMeal }) => {
   return (
     <div className="meal">
-      <div className="meal__card">
+      <div className="meal__card" onClick={() => addMeal(meal)}>
         <div className="meal__left">
-          <h3>{mealTitle}</h3>
-          {mealDescription ? <p className="gray">{mealDescription}</p> : ""}
+          <h3>{meal.title}</h3>
+          {meal.description ? <p className="gray">{meal.description}</p> : ""}
           <div className="meal--infos gray">
-            <span>{mealPrice} €</span>
-            <span className="popular">{mealPopular ? "popular" : ""}</span>
+            <span>{meal.price} €</span>
+            <span className="popular">{meal.popular ? "popular" : ""}</span>
           </div>
         </div>
-        {mealImgSrc ? (
-          <img className="meal__img" src={mealImgSrc} alt={mealTitle} />
+        {meal.picture ? (
+          <img className="meal__img" src={meal.picture} alt={meal.title} />
         ) : (
           ""
         )}

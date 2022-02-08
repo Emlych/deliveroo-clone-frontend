@@ -130,3 +130,15 @@ h3 {
   flex-direction: row;
   align-items: center;
 }
+
+/* cart */
+.main__cart {
+  background-color: #fff;
+}
+.cart--line {
+  display: flex;
+  gap: 10px;
+}
+.cart--title {
+  flex: 2;
+}
