@@ -8,6 +8,7 @@ function App() {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [mealList, setMealList] = useState([]);
+  const [subtotal, setsubtotal] = useState(0);
 
   //fetch data
   useEffect(() => {
@@ -61,7 +62,6 @@ function App() {
   //increment or decrement meal quantity in cart
   const handleQuantity = (index, calculation) => {
     const newMealList = [...mealList];
-
     //Récupérer prix unitaire pour identifiant newMealList[index].id
     // pour sortir l'objet dont Parcourir data.categories.meals[id] === newMealList[index].id
     let unitPrice = 0;
@@ -135,16 +135,29 @@ function App() {
           <div className="subtotal">
             <div className="subtotal--line">
               <div className="subtotal-text">Sous-total</div>
-              <div className="clas">22 €</div>
+              <div className="subtotal-price">
+                {mealList.map((item) => {
+                  let subtotal = 0;
+                  console.log(
+                    "type of Number(item.price):",
+                    typeof Number(item.price)
+                  );
+                  subtotal += Number(item.price);
+                  console.log(typeof subtotal);
+
+                  return subtotal;
+                })}
+                €
+              </div>
             </div>
             <div className="subtotal--line">
               <div className="subtotal-text">Frais de livraison</div>
-              <div className="subotal-price">2,50 €</div>
+              <div className="subotal-price">2.50 €</div>
             </div>
           </div>
           <div className="subtotal--line">
             <div className="total-text">Total</div>
-            <div className="total-price">22 €</div>
+            <div className="total-price">{subtotal + 2.5} €</div>
           </div>
         </div>
       </div>
