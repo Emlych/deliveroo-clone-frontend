@@ -30,9 +30,10 @@ function App() {
     const newMealList = [...mealList];
     let newMeal = {};
 
-    if (!newMealList.length) {
-      console.log("first item in my cart");
-
+    if (
+      !newMealList.length ||
+      !newMealList.some((item) => item.id === meal.id)
+    ) {
       newMeal = {
         id: meal.id,
         quantity: 1,
@@ -42,27 +43,49 @@ function App() {
       newMealList.push(newMeal);
     } else {
       for (let i = 0; i < newMealList.length; i++) {
-        if (meal.id !== newMealList[i].id) {
-          console.log("first type of this meal: ", newMealList[i].title);
-          newMeal = {
-            id: meal.id,
-            quantity: 1,
-            title: meal.title,
-            price: meal.price,
-          };
-          newMealList.push(newMeal);
-        } else {
-          console.log("already got it but ok");
+        if (meal.id === newMealList[i].id) {
           newMealList[i] = {
             id: meal.id,
             quantity: newMealList[i].quantity + 1,
             title: meal.title,
-            price: meal.price,
+            price: (Number(meal.price) + Number(newMealList[i].price)).toFixed(
+              2
+            ),
           };
         }
       }
     }
+    setMealList(newMealList);
+  };
 
+  //increment or decrement meal quantity in cart
+  const handleQuantity = (index, calculation) => {
+    const newMealList = [...mealList];
+
+    //Récupérer prix unitaire pour identifiant newMealList[index].id
+    // pour sortir l'objet dont Parcourir data.categories.meals[id] === newMealList[index].id
+    let unitPrice = 0;
+    for (let i = 0; i < data.categories.length; i++) {
+      // console.log(data.categories[i].meals);
+      for (let j = 0; j < data.categories[i].meals.length; j++) {
+        // console.log(data.categories[i].meals[j].id);
+        if (data.categories[i].meals[j].id === newMealList[index].id) {
+          unitPrice = data.categories[i].meals[j].price;
+        }
+      }
+    }
+
+    if (calculation === "decrement") {
+      if (newMealList[index].quantity === 1) {
+        return; //later manage delete with this line
+      } else {
+        newMealList[index].quantity -= 1;
+      }
+    }
+    if (calculation === "increment") {
+      newMealList[index].quantity += 1;
+    }
+    newMealList[index].price = unitPrice * newMealList[index].quantity;
     setMealList(newMealList);
   };
 
@@ -83,16 +106,46 @@ function App() {
           })}
         </div>
         <div className="main__cart">
-          <button>Valider mon panier</button>
-          {mealList.map((item, index) => {
-            return (
-              <div className="cart--line" key={index}>
-                <div className="cart--quantity">- {item.quantity} +</div>
-                <div className="cart--title">{item.title}</div>
-                <div className="cart--price">{item.price} €</div>
-              </div>
-            );
-          })}
+          <button className="btn--cart">Valider mon panier</button>
+          <div className="meallist">
+            {mealList.map((item, index) => {
+              return (
+                <div className="cart--line" key={index}>
+                  <div className="cart--quantity">
+                    <div
+                      className="handleQuantity"
+                      onClick={() => handleQuantity(index, "decrement")}
+                    >
+                      -
+                    </div>
+                    <div className="quantity"> {item.quantity}</div>
+                    <div
+                      className="handleQuantity"
+                      onClick={() => handleQuantity(index, "increment")}
+                    >
+                      +
+                    </div>
+                  </div>
+                  <div className="cart--title">{item.title}</div>
+                  <div className="cart--price">{item.price} €</div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="subtotal">
+            <div className="subtotal--line">
+              <div className="subtotal-text">Sous-total</div>
+              <div className="clas">22 €</div>
+            </div>
+            <div className="subtotal--line">
+              <div className="subtotal-text">Frais de livraison</div>
+              <div className="subotal-price">2,50 €</div>
+            </div>
+          </div>
+          <div className="subtotal--line">
+            <div className="total-text">Total</div>
+            <div className="total-price">22 €</div>
+          </div>
         </div>
       </div>
     </div>
