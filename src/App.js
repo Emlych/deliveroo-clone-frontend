@@ -57,6 +57,7 @@ function App() {
       }
     }
     setMealList(newMealList);
+    sumSubTotal();
   };
 
   //increment or decrement meal quantity in cart
@@ -87,6 +88,16 @@ function App() {
     }
     newMealList[index].price = unitPrice * newMealList[index].quantity;
     setMealList(newMealList);
+    sumSubTotal();
+  };
+
+  //calculate subtotal
+  const sumSubTotal = () => {
+    mealList.map((item) => {
+      let subtotal = 0;
+      return (subtotal += Number(item.price));
+    });
+    setsubtotal(subtotal);
   };
 
   return isLoading ? (
@@ -135,20 +146,7 @@ function App() {
           <div className="subtotal">
             <div className="subtotal--line">
               <div className="subtotal-text">Sous-total</div>
-              <div className="subtotal-price">
-                {mealList.map((item) => {
-                  let subtotal = 0;
-                  console.log(
-                    "type of Number(item.price):",
-                    typeof Number(item.price)
-                  );
-                  subtotal += Number(item.price);
-                  console.log(typeof subtotal);
-
-                  return subtotal;
-                })}
-                €
-              </div>
+              <div className="subtotal-price">{subtotal}</div>
             </div>
             <div className="subtotal--line">
               <div className="subtotal-text">Frais de livraison</div>
