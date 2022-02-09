@@ -1,7 +1,13 @@
 import React from "react";
 import CartLine from "./CartLine";
 
-const Cart = ({ mealList, handleQuantity, totalMealPrice, sumSubTotal }) => {
+const Cart = ({
+  mealList,
+  handleQuantity,
+  totalMealPrice,
+  sumSubTotal,
+  deliverFee,
+}) => {
   return (
     <div className="main__cart">
       <button className="btn--cart">Valider mon panier</button>
@@ -21,6 +27,7 @@ const Cart = ({ mealList, handleQuantity, totalMealPrice, sumSubTotal }) => {
         <div className="subtotal--line">
           <div className="subtotal-text">Sous-total</div>
           <div className="subtotal-price">{sumSubTotal()} €</div>
+          {typeof sumSubTotal()}
         </div>
         <div className="subtotal--line">
           <div className="subtotal-text">Frais de livraison</div>
@@ -29,7 +36,9 @@ const Cart = ({ mealList, handleQuantity, totalMealPrice, sumSubTotal }) => {
       </div>
       <div className="total--line">
         <div className="total-text">Total</div>
-        <div className="total-price">{Number(sumSubTotal()) + 2.5} €</div>
+        <div className="total-price">
+          {sumSubTotal() + Number(deliverFee)} €
+        </div>
       </div>
     </div>
   );

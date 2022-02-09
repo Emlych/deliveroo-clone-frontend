@@ -58,7 +58,7 @@ function App() {
     const newMealList = [...mealList];
     if (calculation === "decrement") {
       if (newMealList[index].quantity === 1) {
-        return; //later manage delete with this line
+        newMealList.splice(index, 1);
       } else {
         newMealList[index].quantity -= 1;
       }
@@ -77,9 +77,9 @@ function App() {
   const sumSubTotal = () => {
     let subtotal = 0;
     for (let i = 0; i < mealList.length; i++) {
-      subtotal += Number(totalMealPrice(mealList[i]));
+      subtotal += parseFloat(totalMealPrice(mealList[i]));
     }
-    return subtotal.toFixed(2);
+    return Number(subtotal.toFixed(2));
   };
 
   return isLoading ? (
@@ -89,7 +89,7 @@ function App() {
       <Header restaurant={data.restaurant} />
 
       <div className="container main">
-        <div className="main__categories">
+        <div className="main__categories ">
           {data.categories.map((category, index) => {
             return (
               category.meals.length && (
@@ -98,7 +98,25 @@ function App() {
             );
           })}
         </div>
+        {/* Component not displayed on phone */}
+        <div className="no-phone">
+          {sumSubTotal === 0 ? (
+            <div className="main__cart">Votre panier est vide</div>
+          ) : (
+            <Cart
+              mealList={mealList}
+              handleQuantity={handleQuantity}
+              totalMealPrice={totalMealPrice}
+              sumSubTotal={sumSubTotal}
+              deliverFee="2.5"
+            />
+          )}
+        </div>
+      </div>
 
+      {/* Component displayed only on phone */}
+      <div className="cart__phone">
+        <button>Voir le panier</button>
         <Cart
           mealList={mealList}
           handleQuantity={handleQuantity}

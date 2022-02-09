@@ -6,7 +6,7 @@ const Category = ({ category, addMeal }) => {
     <div className="category">
       <h2>{category.name}</h2>
       <div className="category__meals">
-        {category.meals.map((meal, index) => {
+        {category.meals.map((meal) => {
           return <Meal key={meal.id} meal={meal} addMeal={addMeal} />;
         })}
       </div>
