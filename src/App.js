@@ -9,6 +9,7 @@ function App() {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [mealList, setMealList] = useState([]);
+  const [openCart, setOpenCart] = useState(false);
 
   //fetch data
   useEffect(() => {
@@ -29,12 +30,10 @@ function App() {
   //add meal to cart
   const addMeal = (meal) => {
     const newMealList = [...mealList];
-    // let newMeal = {};
 
-    // if (
-    //   !newMealList.length ||
-    //   !newMealList.some((item) => item.id === meal.id)
-    // ) {
+    //Less DRY code to add meal:
+    // let newMeal = {};
+    // if (!newMealList.length ||!newMealList.some((item) => item.id === meal.id)) {
     //   newMeal = {
     //     id: meal.id,
     //     quantity: 1,
@@ -48,7 +47,7 @@ function App() {
     //   }
     // }
 
-    //autre technique :
+    //More DRY code to add meal:
     const exist = newMealList.find((elem) => elem.id === meal.id);
     if (exist) {
       exist.quantity++;
@@ -56,9 +55,7 @@ function App() {
       meal.quantity = 1;
       newMealList.push(meal);
     }
-
     setMealList(newMealList);
-    sumSubTotal();
   };
 
   //increment or decrement meal quantity in cart
@@ -66,7 +63,7 @@ function App() {
     const newMealList = [...mealList];
     if (calculation === "decrement") {
       if (newMealList[index].quantity === 1) {
-        newMealList.splice(index, 1);
+        newMealList.splice(index, 1); //remove element from list when < 1
       } else {
         newMealList[index].quantity -= 1;
       }
@@ -74,21 +71,16 @@ function App() {
     if (calculation === "increment") newMealList[index].quantity += 1;
 
     setMealList(newMealList);
-    sumSubTotal();
   };
   //calcul total price per type of meal
   const totalMealPrice = (item) => {
     return (Number(item.price) * item.quantity).toFixed(2);
   };
 
-  //calculate subtotal
-  const sumSubTotal = () => {
-    let subtotal = 0;
-    for (let i = 0; i < mealList.length; i++) {
-      subtotal += parseFloat(totalMealPrice(mealList[i]));
-    }
-    return Number(subtotal.toFixed(2));
-  };
+  let subtotal = 0;
+  mealList.forEach((item) => {
+    subtotal = subtotal + Number(item.price) * item.quantity;
+  });
 
   return isLoading ? (
     <span>En cours de chargement ...</span>
@@ -106,9 +98,10 @@ function App() {
             );
           })}
         </div>
+
         {/* Component not displayed on phone */}
         <div className="no-phone">
-          {sumSubTotal() === 0 ? (
+          {subtotal === 0 ? (
             <div className="main__cart empty">
               <button className="btn--cart disabled">Valider mon panier</button>
               <p>Votre panier est vide</p>
@@ -118,7 +111,7 @@ function App() {
               mealList={mealList}
               handleQuantity={handleQuantity}
               totalMealPrice={totalMealPrice}
-              sumSubTotal={sumSubTotal}
+              subtotal={subtotal}
               deliverFee="2.5"
             />
           )}
@@ -127,12 +120,15 @@ function App() {
 
       {/* Component displayed only on phone */}
       <div className="cart__phone">
-        <button>Voir le panier</button>
+        <button onClick={() => setOpenCart(!openCart)}>
+          Voir le panier {openCart}
+        </button>
         <Cart
           mealList={mealList}
           handleQuantity={handleQuantity}
           totalMealPrice={totalMealPrice}
-          sumSubTotal={sumSubTotal}
+          subtotal={subtotal}
+          deliverFee="2.5"
         />
       </div>
     </div>

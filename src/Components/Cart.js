@@ -7,6 +7,7 @@ const Cart = ({
   totalMealPrice,
   sumSubTotal,
   deliverFee,
+  subtotal,
 }) => {
   return (
     <div className="main__cart">
@@ -26,7 +27,8 @@ const Cart = ({
       <div className="subtotal">
         <div className="subtotal--line">
           <div className="subtotal-text">Sous-total</div>
-          <div className="subtotal-price">{sumSubTotal()} €</div>
+          {/* <div className="subtotal-price">{sumSubTotal()} €</div> */}
+          <div className="subtotal-price">{subtotal} €</div>
         </div>
         <div className="subtotal--line">
           <div className="subtotal-text">Frais de livraison</div>
@@ -36,7 +38,8 @@ const Cart = ({
       <div className="total--line">
         <div className="total-text">Total</div>
         <div className="total-price">
-          {sumSubTotal() + Number(deliverFee)} €
+          {/* {sumSubTotal() + Number(deliverFee)} € */}
+          {subtotal + Number(deliverFee)} €
         </div>
       </div>
     </div>
