@@ -7,6 +7,8 @@
   --lightgray: #e9ebeb;
   --primaryColor: #00cdbd;
   --secondaryColor: #ff8000;
+  --disabledColor: #bac3c3;
+  --disabledFont: #94a2a3;
 }
 .gray {
   color: var(--secondaryTextColor);
@@ -18,6 +20,9 @@
 }
 .btn--cart {
   background-color: var(--primaryColor);
+}
+.disabled {
+  background-color: var(--disabledColor);
 }
 .handleQuantity {
   color: var(--primaryColor);
@@ -31,6 +36,9 @@
 }
 .btn--cart {
   color: #fff;
+}
+.disabled {
+  color: var(--disabledFont);
 }
 .popular {
   color: var(--secondaryColor);

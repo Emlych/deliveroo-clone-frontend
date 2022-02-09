@@ -100,8 +100,11 @@ function App() {
         </div>
         {/* Component not displayed on phone */}
         <div className="no-phone">
-          {sumSubTotal === 0 ? (
-            <div className="main__cart">Votre panier est vide</div>
+          {sumSubTotal() === 0 ? (
+            <div className="main__cart">
+              <button className="btn--cart disabled">Valider mon panier</button>
+              <p>Votre panier est vide</p>
+            </div>
           ) : (
             <Cart
               mealList={mealList}

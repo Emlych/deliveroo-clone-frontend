@@ -27,7 +27,6 @@ const Cart = ({
         <div className="subtotal--line">
           <div className="subtotal-text">Sous-total</div>
           <div className="subtotal-price">{sumSubTotal()} €</div>
-          {typeof sumSubTotal()}
         </div>
         <div className="subtotal--line">
           <div className="subtotal-text">Frais de livraison</div>
