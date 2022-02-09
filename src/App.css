@@ -31,7 +31,8 @@
 .cart--line {
   color: var(--primaryTextColor);
 }
-.quantity {
+.quantity,
+.empty {
   color: var(--secondaryTextColor);
 }
 .btn--cart {
@@ -47,6 +48,13 @@
 .meallist,
 .subtotal {
   border-bottom: 1px solid var(--lightgray);
+}
+.btn--cart:hover,
+.handleQuantity:hover {
+  cursor: pointer;
+}
+.disabled:hover {
+  cursor: not-allowed;
 }
 
 /* placement */
@@ -230,6 +238,17 @@ img {
     align-items: center;
     gap: 10px;
     padding: 16px 0;
+  }
+
+  /* Empty cart */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .empty p {
+    padding: 3rem 0;
   }
 
   /* CartLine component */

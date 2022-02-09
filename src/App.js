@@ -29,26 +29,34 @@ function App() {
   //add meal to cart
   const addMeal = (meal) => {
     const newMealList = [...mealList];
-    let newMeal = {};
+    // let newMeal = {};
 
-    if (
-      !newMealList.length ||
-      !newMealList.some((item) => item.id === meal.id)
-    ) {
-      newMeal = {
-        id: meal.id,
-        quantity: 1,
-        title: meal.title,
-        price: Number(meal.price),
-      };
-      newMealList.push(newMeal);
+    // if (
+    //   !newMealList.length ||
+    //   !newMealList.some((item) => item.id === meal.id)
+    // ) {
+    //   newMeal = {
+    //     id: meal.id,
+    //     quantity: 1,
+    //     title: meal.title,
+    //     price: Number(meal.price),
+    //   };
+    //   newMealList.push(newMeal);
+    // } else {
+    //   for (let i = 0; i < newMealList.length; i++) {
+    //     if (meal.id === newMealList[i].id) newMealList[i].quantity++;
+    //   }
+    // }
+
+    //autre technique :
+    const exist = newMealList.find((elem) => elem.id === meal.id);
+    if (exist) {
+      exist.quantity++;
     } else {
-      for (let i = 0; i < newMealList.length; i++) {
-        if (meal.id === newMealList[i].id) {
-          newMealList[i].quantity++;
-        }
-      }
+      meal.quantity = 1;
+      newMealList.push(meal);
     }
+
     setMealList(newMealList);
     sumSubTotal();
   };
@@ -101,7 +109,7 @@ function App() {
         {/* Component not displayed on phone */}
         <div className="no-phone">
           {sumSubTotal() === 0 ? (
-            <div className="main__cart">
+            <div className="main__cart empty">
               <button className="btn--cart disabled">Valider mon panier</button>
               <p>Votre panier est vide</p>
             </div>
