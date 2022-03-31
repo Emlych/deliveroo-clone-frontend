@@ -370,4 +370,19 @@ img {
   }
 
   /* Cart modal */
+  .hide {
+    display: none;
+  }
+  .show {
+    display: block;
+  }
+  .btn__phone--cart {
+    background-color: (var(--primaryColor));
+    /* color: var(--lightgray); */
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 800;
+  }
 }

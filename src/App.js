@@ -120,16 +120,25 @@ function App() {
 
       {/* Component displayed only on phone */}
       <div className="cart__phone">
-        <button onClick={() => setOpenCart(!openCart)}>
-          Voir le panier {openCart}
+        <button
+          className={
+            openCart ? "btn__phone--cart hide" : "btn__phone--cart show"
+          }
+          onClick={() => setOpenCart(!openCart)}
+        >
+          <div className="btn__item--quantity">2</div>
+          <div className="btn__item--text">Voir le panier</div>
+          <div className="btn__item--text">52.25 €r</div>
         </button>
-        <Cart
-          mealList={mealList}
-          handleQuantity={handleQuantity}
-          totalMealPrice={totalMealPrice}
-          subtotal={subtotal}
-          deliverFee="2.5"
-        />
+        <div className={openCart ? "show" : "hide"}>
+          <Cart
+            mealList={mealList}
+            handleQuantity={handleQuantity}
+            totalMealPrice={totalMealPrice}
+            subtotal={subtotal}
+            deliverFee="2.5"
+          />
+        </div>
       </div>
     </div>
   );
